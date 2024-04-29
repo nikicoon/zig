@@ -163,6 +163,9 @@ force_load_objc: bool = false,
 /// Position Independent Executable
 pie: ?bool = null,
 
+// Omit debug symbols
+strip: ?bool = null,
+
 dll_export_fns: ?bool = null,
 
 subsystem: ?std.Target.SubSystem = null,
@@ -1643,6 +1646,8 @@ fn make(step: *Step, prog_node: *std.Progress.Node) !void {
 
     try addFlag(&zig_args, "PIE", self.pie);
     try addFlag(&zig_args, "lto", self.want_lto);
+
+    try addFlag(&zig_args, "strip, self.strip);
 
     if (self.subsystem) |subsystem| {
         try zig_args.append("--subsystem");
